@@ -6,6 +6,12 @@ app.get('/', (__request, response) => {
         'https://api.openweathermap.org/data/2.5/weather?APPID=a63307ba1cc6efe973291d68a210e13a&q=Tervuren&units=metric'
     https.get(url, (response) => {
         console.log(response.statusCode)
+        response.on('data', (data) => {
+            const weatherData = JSON.parse(data)
+            const temp = weatherData.main.temp
+            const weatherDescription = weatherData.weather[0].description
+            console.log(temp, weatherDescription)
+        })
     })
     response.send('Server is up and running.')
 })
